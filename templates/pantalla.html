@@ -1,0 +1,35 @@
+{# Pantalla proyectada. Esqueleto común: cada tarea rellena SOLO su parte.
+   T04: rotación de vistas · T07: mural · T08: vídeo · T09: foro · T10: QR y estilos #}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>25N · Pantalla</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+  <!-- T07: mural de burbujas -->
+  <section id="vista-mural" class="vista"></section>
+
+  <!-- T08: vídeo -->
+  <section id="vista-video" class="vista" hidden>
+    <video id="video25n" src="{{ url_for('static', filename='video/video.mp4') }}" muted playsinline></video>
+  </section>
+
+  <!-- T09: foro -->
+  <section id="vista-foro" class="vista" hidden></section>
+
+  <!-- T10: QR fijo en una esquina, visible en las tres vistas -->
+  <aside id="qr">
+    <img src="{{ url_for('static', filename='img/qr.png') }}" alt="Código QR para participar">
+    <p>Leave your message / Deja tu mensaje</p>
+  </aside>
+
+  <script src="{{ url_for('static', filename='js/mural.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/video.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/foro.js') }}"></script>
+  <!-- T04: va el último porque usa pintarMural, pintarForo, iniciarVideo y pararVideo -->
+  <script src="{{ url_for('static', filename='js/pantalla.js') }}"></script>
+</body>
+</html>

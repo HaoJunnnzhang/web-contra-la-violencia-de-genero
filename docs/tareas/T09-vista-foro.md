@@ -4,7 +4,7 @@
 **Goal:** Show the approved reflections on the projected screen.
 
 **To do**
-- In `static/foro.js`, write `pintarForo(reflexiones)`, which receives an array like `[{id: 1, titulo: "...", texto: "..."}]`.
+- In `static/js/foro.js`, write `pintarForo(reflexiones)`, which receives an array like `[{id: 1, titulo: "...", texto: "..."}]`.
 - Each reflection is a card with a title and text.
 - Show 2–3 cards at a time and rotate them every ~15 s (or a slow automatic scroll).
 - **Always insert the text with `textContent`, never with `innerHTML`.**
@@ -22,7 +22,7 @@
 **Objetivo:** Mostrar las reflexiones aprobadas en la pantalla proyectada.
 
 **Qué hay que hacer**
-- En `static/foro.js`, escribir `pintarForo(reflexiones)`, que recibe un array como `[{id: 1, titulo: "...", texto: "..."}]`.
+- En `static/js/foro.js`, escribir `pintarForo(reflexiones)`, que recibe un array como `[{id: 1, titulo: "...", texto: "..."}]`.
 - Cada reflexión es una tarjeta con título y texto.
 - Mostrar 2–3 tarjetas a la vez y rotarlas cada ~15 s (o un scroll lento automático).
 - **Insertar siempre el texto con `textContent`, nunca con `innerHTML`.**

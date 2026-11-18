@@ -1,5 +1,5 @@
 -- Esquema de la base de datos SQLite del proyecto 25N.
--- Se aplica con init_db() en db.py (o: sqlite3 datos/25n.db < schema.sql).
+-- Se aplica con init_db() en bd/db.py (o: sqlite3 datos/25n.db < bd/schema.sql).
 -- Es idempotente: se puede ejecutar varias veces sin perder datos.
 
 -- Mensajes cortos del mural de burbujas (T01, T02, T03, T07).

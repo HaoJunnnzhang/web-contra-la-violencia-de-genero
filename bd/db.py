@@ -2,7 +2,7 @@
 
 Uso desde app.py (T01):
 
-    import db
+    from bd import db
     db.init_db()                      # al arrancar: crea las tablas si no existen
     db.insertar_mural("texto")        # POST /mural
     db.listar_mural(solo_visibles=True, limite=30)   # GET /api/mural (T02)
@@ -12,16 +12,17 @@ La ruta del fichero se toma de la variable de entorno DB_PATH
 (por defecto, datos/25n.db). En el despliegue (T05) debe apuntar a un disco
 persistente para que los datos sobrevivan a un reinicio.
 
-Ejecutar `python db.py` crea la base de datos vacía.
+Ejecutar `python -m bd.db` (desde la raíz del proyecto) crea la base de datos vacía.
 """
 
 import os
 import sqlite3
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = Path(os.environ.get("DB_PATH", BASE_DIR / "datos" / "25n.db"))
-SCHEMA_PATH = BASE_DIR / "schema.sql"
+BD_DIR = Path(__file__).resolve().parent
+PROYECTO_DIR = BD_DIR.parent
+DB_PATH = Path(os.environ.get("DB_PATH", PROYECTO_DIR / "datos" / "25n.db"))
+SCHEMA_PATH = BD_DIR / "schema.sql"
 
 # Longitudes máximas (las mismas que en schema.sql y en el formulario de T06).
 MAX_MURAL_TEXTO = 200

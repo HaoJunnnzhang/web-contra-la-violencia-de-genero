@@ -4,7 +4,7 @@
 **Goal:** Draw the messages as floating bubbles on the projected screen.
 
 **To do**
-- In `static/mural.js`, write `pintarMural(mensajes)`, which receives an array like `[{id: 1, texto: "..."}]`.
+- In `static/js/mural.js`, write `pintarMural(mensajes)`, which receives an array like `[{id: 1, texto: "..."}]`.
 - Each message is a bubble (`div`) with a random position and a soft floating animation (`@keyframes`).
 - Show at most ~30 bubbles; new ones enter with a simple effect (fade or grow).
 - **Always insert the text with `textContent`, never with `innerHTML`.**
@@ -22,7 +22,7 @@
 **Objetivo:** Dibujar los mensajes como burbujas flotantes en la pantalla proyectada.
 
 **Qué hay que hacer**
-- En `static/mural.js`, escribir `pintarMural(mensajes)`, que recibe un array como `[{id: 1, texto: "..."}]`.
+- En `static/js/mural.js`, escribir `pintarMural(mensajes)`, que recibe un array como `[{id: 1, texto: "..."}]`.
 - Cada mensaje es una burbuja (`div`) con posición aleatoria y una animación suave de flotación (`@keyframes`).
 - Mostrar como máximo unas 30 burbujas; las nuevas entran con un efecto sencillo (aparecer o crecer).
 - **Insertar siempre el texto con `textContent`, nunca con `innerHTML`.**
