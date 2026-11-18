@@ -1,1 +1,79 @@
 {# T06 — Formulario público (mensaje burbuja + reflexión). Mobile first. #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4a1a6b">
+  <title>Participa · 25N</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/participa.css') }}">
+</head>
+<body>
+  <header class="cabecera">
+    <h1>25N · Deja tu mensaje</h1>
+    <p>Día Internacional para la Eliminación de la Violencia contra la Mujer</p>
+  </header>
+
+  <main class="contenido">
+    <p class="aviso" role="note">
+      <strong>Importante:</strong> No uses nombres reales ni datos que identifiquen a nadie.
+    </p>
+
+    <input type="radio" name="pestana" id="tab-mural" class="tab-radio" checked>
+    <input type="radio" name="pestana" id="tab-foro" class="tab-radio">
+
+    <div class="pestanas">
+      <label for="tab-mural">Mensaje burbuja</label>
+      <label for="tab-foro">Reflexión</label>
+    </div>
+
+    <section id="panel-mural" class="panel" aria-labelledby="titulo-mural">
+      <form class="formulario" method="POST" action="/mural">
+        <h2 id="titulo-mural">Mensaje burbuja</h2>
+        <p class="desc">Un mensaje corto que aparecerá en el mural de la pantalla.</p>
+        <label class="campo" for="mural-texto">Tu mensaje</label>
+        <textarea id="mural-texto" name="texto" maxlength="200" required
+                  placeholder="Escribe aquí tu mensaje…" data-contador="cont-mural"></textarea>
+        <div class="contador" id="cont-mural" aria-live="polite"></div>
+        <button class="boton" type="submit">Enviar mensaje</button>
+      </form>
+    </section>
+
+    <section id="panel-foro" class="panel" aria-labelledby="titulo-foro">
+      <form class="formulario" method="POST" action="/foro">
+        <h2 id="titulo-foro">Reflexión</h2>
+        <p class="desc">Comparte una reflexión más larga para el foro.</p>
+        <label class="campo" for="foro-titulo">Título</label>
+        <input type="text" id="foro-titulo" name="titulo" maxlength="80" required
+               placeholder="Un título breve" data-contador="cont-titulo">
+        <div class="contador" id="cont-titulo" aria-live="polite"></div>
+        <label class="campo" for="foro-texto">Tu reflexión</label>
+        <textarea id="foro-texto" name="texto" maxlength="1000" required
+                  placeholder="Escribe aquí tu reflexión…" data-contador="cont-foro"></textarea>
+        <div class="contador" id="cont-foro" aria-live="polite"></div>
+        <button class="boton" type="submit">Enviar reflexión</button>
+        <p class="nota">Tu reflexión se mostrará tras ser revisada.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="pie">#25N · Juntas contra la violencia de género</footer>
+
+  <script>
+    // Contador de caracteres (opcional). Si el JS falla, los formularios siguen funcionando.
+    document.querySelectorAll('[data-contador]').forEach(function (campo) {
+      var contador = document.getElementById(campo.dataset.contador);
+      var maximo = campo.maxLength;
+      function actualizar() {
+        var usados = campo.value.length;
+        contador.textContent = usados + ' / ' + maximo;
+        contador.classList.toggle('cerca', maximo - usados <= Math.max(10, maximo * 0.1));
+      }
+      campo.addEventListener('input', actualizar);
+      actualizar();
+    });
+    // /participa#foro abre directamente la pestaña de reflexión.
+    if (location.hash === '#foro') document.getElementById('tab-foro').checked = true;
+  </script>
+</body>
+</html>
