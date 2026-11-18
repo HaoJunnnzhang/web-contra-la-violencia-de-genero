@@ -14,6 +14,7 @@ Cada archivo ya existe con un comentario que indica qué tarea lo rellena.
 ```
 .
 ├── app.py                  T01–T03 · rutas Flask (sin SQL: se usa bd/db.py)
+├── wsgi.py                 T05 · entrada de producción (gunicorn)
 ├── bd/
 │   ├── db.py               Acceso a la base de datos (todas las consultas)
 │   └── schema.sql          Tablas mural y foro
@@ -34,7 +35,10 @@ Cada archivo ya existe con un comentario que indica qué tarea lo rellena.
 │   │   └── foro.js         T09 · pintarForo(reflexiones)
 │   ├── img/qr.png          T10 · QR de /participa
 │   └── video/video.mp4     T08 · vídeo de concienciación
-├── docs/tareas/            Enunciado de cada tarea (T01–T10)
+├── deploy/                 T05 · scripts y plantillas de despliegue
+├── docs/
+│   ├── tareas/             Enunciado de cada tarea (T01–T10)
+│   └── DESPLIEGUE.md       T05 · guía de despliegue y checklist de PRs
 ├── datos/                  Se crea solo: aquí vive 25n.db (no se sube a git)
 ├── requirements.txt
 └── .env.example            Variables de entorno (copiar a .env)
@@ -50,6 +54,40 @@ python -m bd.db             # crea datos/25n.db
 flask --app app run --debug
 ```
 
+En producción la app corre con gunicorn detrás de NGINX en
+**https://thedevhub.santiagof.dev/colaboraciones/2026-2027/web-contra-la-violencia-de-genero/**.
+Ver [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
+
+## URLs: la app vive en un subdirectorio
+
+En producción todas las rutas llevan delante `/colaboraciones/2026-2027/web-contra-la-violencia-de-genero`.
+Por eso **nunca se escriben rutas que empiecen por `/`**:
+
+- **Plantillas:** siempre `url_for`.
+  `<form method="POST" action="{{ url_for('crear_mural') }}">`,
+  `<link href="{{ url_for('static', filename='css/estilos.css') }}">`
+- **Python:** `redirect(url_for('gracias'))`, nunca `redirect('/gracias')`.
+- **JavaScript:** las URLs las da la plantilla. `pantalla.html` las pone en `<body data-api-mural="…">`
+  y el JS las lee con `document.body.dataset.apiMural`.
+
+Nombres de las rutas (el nombre de la función en `app.py` = endpoint de `url_for`):
+
+| Endpoint | Ruta | Método | Tarea |
+|---|---|---|---|
+| `inicio` | `/` → redirige a `participa` | GET | T01 |
+| `participa` | `/participa` | GET | T01 |
+| `crear_mural` | `/mural` | POST | T01 |
+| `crear_foro` | `/foro` | POST | T01 |
+| `gracias` | `/gracias` | GET | T01 |
+| `pantalla` | `/pantalla` | GET | T02 |
+| `api_mural` | `/api/mural` | GET | T02 |
+| `api_foro` | `/api/foro` | GET | T02 |
+| `admin` | `/admin` | GET | T03 |
+| `admin_accion` | `/admin/<tabla>/<int:id>/<accion>` | POST | T03 |
+
+Usuarios de HTTP Basic Auth: `admin` y `pantalla` (variables `ADMIN_USER`/`PANTALLA_USER` en `.env`),
+con las contraseñas `ADMIN_PASS` y `PANTALLA_PASS`.
+
 ## Normas del equipo
 
 1. **Una rama por tarea**, creada desde `main`: `t01-backend-base`, `t07-mural-burbujas`…
@@ -62,5 +100,6 @@ flask --app app run --debug
 5. **Contraseñas:** solo en `.env` (que no se sube). Nada de claves en el código.
 6. **Nombres** en español y sin tildes en archivos, funciones y variables
    (`pintarMural`, `listar_foro`, `vista-mural`).
-7. **Rutas de archivos estáticos** en las plantillas con
-   `{{ url_for('static', filename='css/estilos.css') }}`.
+7. **Nunca rutas absolutas** (ver «URLs» arriba): `url_for` en plantillas y Python; en JS, las URLs de `data-*`.
+8. **Sin JavaScript ni CSS en línea:** nada de `<script>…</script>`, `<style>`, `onclick=` ni `style=` en el HTML.
+   Todo va en `static/js/` y `static/css/` (el servidor puede bloquearlo por seguridad).
