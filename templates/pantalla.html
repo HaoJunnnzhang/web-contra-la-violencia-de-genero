@@ -8,7 +8,7 @@
   <title>25N · Pantalla</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
-<body>
+<body data-api-mural="{{ url_for('api_mural') }}" data-api-foro="{{ url_for('api_foro') }}">
   <!-- T07: mural de burbujas -->
   <section id="vista-mural" class="vista"></section>
 

@@ -21,7 +21,7 @@ from pathlib import Path
 
 BD_DIR = Path(__file__).resolve().parent
 PROYECTO_DIR = BD_DIR.parent
-DB_PATH = Path(os.environ.get("DB_PATH", PROYECTO_DIR / "datos" / "25n.db"))
+DB_PATH = Path(os.environ.get("DB_PATH") or PROYECTO_DIR / "datos" / "25n.db")
 SCHEMA_PATH = BD_DIR / "schema.sql"
 
 # Longitudes máximas (las mismas que en schema.sql y en el formulario de T06).
@@ -51,16 +51,26 @@ def get_conexion():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(DB_PATH, timeout=10)
     con.row_factory = sqlite3.Row
-    # WAL permite leer (pantalla) mientras se escribe (móviles) sin bloqueos.
-    con.execute("PRAGMA journal_mode = WAL")
     return con
 
 
 def init_db():
-    """Crea las tablas e índices si no existen. No borra nada."""
-    with get_conexion() as con:
+    """Crea las tablas e índices si no existen y activa el modo WAL. No borra nada.
+
+    El modo WAL (lecturas de la pantalla mientras escriben los móviles) se guarda
+    en el propio fichero, así que basta con activarlo aquí una vez.
+    En producción lo ejecuta gunicorn una sola vez antes de arrancar los procesos
+    (deploy/gunicorn.conf.py): si varios procesos lo hicieran a la vez sobre una
+    base nueva, SQLite podría responder «database is locked».
+    """
+    con = get_conexion()
+    try:
+        modo = con.execute("PRAGMA journal_mode").fetchone()[0]
+        if modo.lower() != "wal":
+            con.execute("PRAGMA journal_mode = WAL")
         con.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
-    con.close()
+    finally:
+        con.close()
 
 
 def _ejecutar(sql, params=()):

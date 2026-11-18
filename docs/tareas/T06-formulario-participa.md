@@ -6,8 +6,8 @@
 **To do**
 - Mobile-first HTML + CSS template (`templates/participa.html`).
 - Two options (tabs or two blocks):
-  - **Bubble message:** one `textarea` (max 200), `form method="POST" action="/mural"`.
-  - **Reflection:** title (max 80) + text (max 1000), `form method="POST" action="/foro"`.
+  - **Bubble message:** one `textarea` (max 200), `form method="POST" action="{{ url_for('crear_mural') }}"`.
+  - **Reflection:** title (max 80) + text (max 1000), `form method="POST" action="{{ url_for('crear_foro') }}"`.
 - Use `maxlength` and `required` in the inputs.
 - Privacy notice: *"Do not use real names or details that identify anyone."*
 - Note under the forum: *"Your reflection will be shown after review."*
@@ -27,8 +27,8 @@
 **Qué hay que hacer**
 - Plantilla HTML + CSS mobile first (`templates/participa.html`).
 - Dos opciones (pestañas o dos bloques):
-  - **Mensaje burbuja:** un `textarea` (máx. 200), `form method="POST" action="/mural"`.
-  - **Reflexión:** título (máx. 80) + texto (máx. 1000), `form method="POST" action="/foro"`.
+  - **Mensaje burbuja:** un `textarea` (máx. 200), `form method="POST" action="{{ url_for('crear_mural') }}"`.
+  - **Reflexión:** título (máx. 80) + texto (máx. 1000), `form method="POST" action="{{ url_for('crear_foro') }}"`.
 - Usar `maxlength` y `required` en los campos.
 - Aviso de privacidad: *«No uses nombres reales ni datos que identifiquen a nadie.»*
 - Nota bajo el foro: *«Tu reflexión se mostrará tras ser revisada.»*

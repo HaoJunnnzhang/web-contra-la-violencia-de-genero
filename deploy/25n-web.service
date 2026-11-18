@@ -1,0 +1,19 @@
+# Plantilla del servicio systemd (T05).
+# deploy/instalar.sh sustituye __USUARIO__ y __APP_DIR__ y la instala en
+# /etc/systemd/system/25n-web.service. No la edites a mano en el servidor.
+
+[Unit]
+Description=Web 25N contra la violencia de género (Flask + gunicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=__USUARIO__
+WorkingDirectory=__APP_DIR__
+EnvironmentFile=__APP_DIR__/.env
+ExecStart=__APP_DIR__/.venv/bin/gunicorn -c deploy/gunicorn.conf.py wsgi:app
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

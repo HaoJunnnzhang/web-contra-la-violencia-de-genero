@@ -6,7 +6,7 @@
 **To do**
 - Merge the views and functions from T06–T10 into the Flask app (templates and `static/`).
 - Review the code: parameterized SQL, `textContent` for user text, no passwords in the repo.
-- Start the app on the chosen hosting (school PC + tunnel, or host with persistent disk).
+- Start the app on the server (gunicorn + systemd behind NGINX) at `https://thedevhub.santiagof.dev/colaboraciones/2026-2027/web-contra-la-violencia-de-genero/`. See `docs/DESPLIEGUE.md`.
 - Confirm the public URL and give it to T10 to generate the QR.
 - End-to-end test: send from 2–3 real phones **using mobile data**, moderate in `/admin`, check on the real screen.
 
@@ -22,7 +22,7 @@
 **Qué hay que hacer**
 - Integrar las vistas y funciones de T06–T10 en la aplicación Flask (plantillas y `static/`).
 - Revisar el código: SQL parametrizado, `textContent` para el texto de usuario, ninguna contraseña en el repositorio.
-- Arrancar la aplicación en el alojamiento elegido (PC del centro + túnel, o hosting con disco persistente).
+- Arrancar la aplicación en el servidor (gunicorn + systemd detrás de NGINX) en `https://thedevhub.santiagof.dev/colaboraciones/2026-2027/web-contra-la-violencia-de-genero/`. Ver `docs/DESPLIEGUE.md`.
 - Confirmar la URL pública y pasarla a la T10 para generar el QR.
 - Prueba completa: enviar desde 2–3 móviles reales **con datos móviles**, moderar en `/admin` y comprobarlo en la pantalla real.
 

@@ -8,7 +8,8 @@
   - `mural(id, texto ≤200, creado, visible DEFAULT 1)`
   - `foro(id, titulo ≤80, texto ≤1000, creado, aprobado DEFAULT 0)`
 - `POST /mural` and `POST /foro`: validate input (trim, not empty, max length) and insert with `db.insertar_mural()` / `db.insertar_foro()` (**parameterized queries**).
-- Redirect to `GET /gracias` (simple confirmation page).
+- Redirect with `redirect(url_for('gracias'))` to `GET /gracias` (simple confirmation page). `GET /` redirects to `participa`.
+- Use the endpoint names from the README table (`participa`, `crear_mural`, `crear_foro`, `gracias`, `inicio`). The app runs in a subdirectory: never hard-code paths that start with `/`.
 - Serve `GET /participa` (template provided by T06).
 
 **Done when**
@@ -26,7 +27,8 @@
   - `mural(id, texto ≤200, creado, visible DEFAULT 1)`
   - `foro(id, titulo ≤80, texto ≤1000, creado, aprobado DEFAULT 0)`
 - `POST /mural` y `POST /foro`: validar la entrada (quitar espacios, no vacía, longitud máxima) e insertar con `db.insertar_mural()` / `db.insertar_foro()` (**consultas parametrizadas**).
-- Redirigir a `GET /gracias` (página de confirmación sencilla).
+- Redirigir con `redirect(url_for('gracias'))` a `GET /gracias` (página de confirmación sencilla). `GET /` redirige a `participa`.
+- Usar los nombres de endpoint de la tabla del README (`participa`, `crear_mural`, `crear_foro`, `gracias`, `inicio`). La app vive en un subdirectorio: nunca escribir rutas que empiecen por `/`.
 - Servir `GET /participa` (plantilla de la T06).
 
 **Terminado cuando**

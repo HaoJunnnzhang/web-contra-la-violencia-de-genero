@@ -7,7 +7,7 @@
 - `GET /admin` (admin credentials only), rendered on the server with Jinja.
 - Two lists: bubble messages and forum reflections, newest first, with status.
 - Buttons (small HTML forms): **Hide/Show** (mural), **Approve** (forum), **Delete** (both).
-- `POST /admin/<tabla>/<id>/<accion>`: validate table and action against an allowed list, run the change and redirect to `/admin`.
+- `POST /admin/<tabla>/<id>/<accion>`: use `db.aplicar_accion()` (it already validates table and action against an allowed list) and `redirect(url_for('admin'))`. Forms use `action="{{ url_for('admin_accion', tabla=..., id=..., accion=...) }}"`.
 - Forum reflections pending approval are highlighted at the top.
 
 **Done when**
@@ -24,7 +24,7 @@
 - `GET /admin` (solo credenciales de admin), generada en el servidor con Jinja.
 - Dos listas: mensajes del mural y reflexiones del foro, más recientes primero, con su estado.
 - Botones (pequeños formularios HTML): **Ocultar/Mostrar** (mural), **Aprobar** (foro), **Borrar** (ambos).
-- `POST /admin/<tabla>/<id>/<accion>`: validar tabla y acción contra una lista permitida, aplicar el cambio y redirigir a `/admin`.
+- `POST /admin/<tabla>/<id>/<accion>`: usar `db.aplicar_accion()` (ya valida tabla y acción contra una lista permitida) y `redirect(url_for('admin'))`. Los formularios usan `action="{{ url_for('admin_accion', tabla=..., id=..., accion=...) }}"`.
 - Las reflexiones pendientes de aprobar aparecen destacadas arriba.
 
 **Terminado cuando**
